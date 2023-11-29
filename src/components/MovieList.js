@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import MovieListItem from "./MovieListItem";
 import MovieFooter from "./MovieFooter";

@@ -4,12 +4,25 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 
 const Movie = (props) => {
-  const { addToFavorites } = props;
+  const { addToFavorites, setMovies } = props;
 
   const [movie, setMovie] = useState("");
 
   const { id } = useParams();
   const { push } = useHistory();
+
+  const deleteMovie = (e) => {
+    axios
+      .delete(`http://localhost:9000/api/movies/${id}`)
+      .then((res) => {
+        console.log("delete   ", res.data);
+        setMovies(res.data);
+        push(`/movies`);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  };
 
   useEffect(() => {
     axios
@@ -60,7 +73,11 @@ const Movie = (props) => {
         >
           Edit
         </Link>
-        <button type="button" className="myButton bg-red-600 hover:bg-red-500">
+        <button
+          onClick={deleteMovie}
+          type="button"
+          className="myButton bg-red-600 hover:bg-red-500"
+        >
           Sil
         </button>
       </div>
